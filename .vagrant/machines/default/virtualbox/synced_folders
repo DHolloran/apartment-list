@@ -1,1 +1,0 @@
-{"virtualbox":{"/home/vagrant/apartment-list":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/apartment-list","hostpath":"/Users/dholloran/Code/apartment-list","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/dholloran/Code/apartment-list","disabled":false}}}
