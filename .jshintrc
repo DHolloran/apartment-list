@@ -1,0 +1,34 @@
+{
+	"browser": true,
+	"devel": true,
+	"bitwise": true,
+	"jquery": true,
+	"node": true,
+	"plusplus": true,
+	"esnext": true,
+	"noarg": true,
+	"predef": [
+				"Modernizr"
+		],
+	"debug": true,
+	"eqnull": true,
+	"quotmark": true,
+	"globals": {
+		"wp": true,
+		"window": true,
+		"$": true,
+		"module": true,
+		"ajaxurl": true
+	},
+	"maxdepth": 3,
+	"latedef": true,
+	"curly": true,
+	"eqeqeq": true,
+	"freeze": true,
+	"futurehostile": true,
+	"maxparams": 4,
+	"notypeof": true,
+	"shadow": "outer",
+	"undef": true,
+	"unused": true
+}
