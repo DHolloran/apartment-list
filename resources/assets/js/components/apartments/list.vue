@@ -19,10 +19,33 @@
         {{{ message.value }}}
     </li>
 </ul>
-<ul class="list-group">
-    <li class="list-group-item" v-for="apartment in apartments">
-        <h4>{{ apartment.name }}</h4>
-        <ul class="list-unstyled">
+<ul id="apartment_list" class="list-group">
+    <li
+        class="list-group-item"
+        v-for="apartment in apartments"
+    >
+        <h4
+            class="apartment-list"
+            @click="toggleShowDetails($index)"
+        >
+            {{ apartment.name }}
+        </h4>
+        {{ apartment.id }}
+        <input type="hidden" class="js-dragula-order" value="{{ apartment.order }}">
+        <input type="hidden" class="js-dragula-id" value="{{ apartment.id }}">
+        <a href="/apartments/{{ apartment.id }}/edit" class="btn btn-link">Edit</a>
+        <form
+            method="POST"
+            action="/apartments/{{ apartment.id }}"
+            accept-charset="UTF-8"
+            @submit.prevent='deleteApartment($index)'
+        >
+            <input name="_method" type="hidden" value="DELETE">
+            <input name="_token" type="hidden" value="{{ token }}">
+            <button type="submit" class="btn btn-danger btn-link">Delete</button>
+        </form>
+        <span class="btn btn-list js-dragula-handle">Handle</span>
+        <ul class="list-unstyled" v-show="apartment.showDetails">
             <li>
                 <strong>Location</strong>
                 <address>
@@ -45,17 +68,6 @@
                 <strong>Deposit:</strong> ${{ apartment.deposit }}
             </li>
         </ul>
-        <a href="/apartments/{{ apartment.id }}/edit" class="btn btn-default">Edit</a>
-        <form
-            method="POST"
-            action="/apartments/{{ apartment.id }}"
-            accept-charset="UTF-8"
-            @submit.prevent='deleteApartment($index)'
-        >
-            <input name="_method" type="hidden" value="DELETE">
-            <input name="_token" type="hidden" value="{{ token }}">
-            <button type="submit" class="btn btn-danger btn-mini">Delete</button>
-        </form>
     </li>
 </ul>
 

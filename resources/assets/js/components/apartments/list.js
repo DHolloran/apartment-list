@@ -2,12 +2,119 @@ var aptList = {};
 aptList.data = {
     apartments : [],
     api        : {
-        index  : '/apartments',
-        delete : '',
+        index       : '/apartments',
+        delete      : '',
+        updateOrder : 'api/apartments/update-order',
+    },
+    order      : {
+        update : {},
     },
     messages   : [],
 };
 aptList.methods = {};
+
+/**
+ * Sets the current apartment list order.
+ *
+ * @param  {Object}  vm  The Vue instance.
+ *
+ * @return                false
+ */
+aptList.methods.setCurrentApartmentOrder = function( vm ) {
+    var listItems = document.querySelectorAll( '#apartment_list>li' );
+    vm.order.update = {};
+
+    for ( var i = 0; i < listItems.length; i++ ) {
+        var listItem = listItems[ i ];
+        var orderInput = listItem.getElementsByClassName( 'js-dragula-order' )[ 0 ];
+        var value = parseInt( orderInput.value, 10 );
+        if ( i === value ) {
+            continue;
+        }
+
+        // Update the new order.
+        var idInput = listItem.getElementsByClassName( 'js-dragula-id' )[ 0 ];
+        vm.order.update[ idInput.value ] = i;
+        orderInput.value = i;
+    }
+
+    return false;
+};
+
+/**
+ * Updates the current apartment list order.
+ *
+ * @param  {Object}  vm  The Vue instance.
+ *
+ * @return                false
+ */
+aptList.methods.updateApartmentOrder = function( vm ) {
+    aptList.methods.setCurrentApartmentOrder( vm );
+
+    return false;
+};
+
+/**
+ * Stores the current apartment list order.
+ *
+ * @param  {Object}  vm  The Vue instance.
+ *
+ * @return                false
+ */
+aptList.methods.storeApartmentOrder = function( vm ) {
+    console.log( 'store order' );
+
+    return false;
+};
+
+/**
+ * Initializes Dragula.
+ *
+ * @see http://bevacqua.github.io/dragula/
+ *
+ * @param  {Object}  vm  The Vue instance.
+ *
+ * @return                false
+ */
+aptList.methods.initDragula = function( vm ) {
+    // This is admittedly hacky, currently Vue does not have any way
+    // for us to tell when the v-for has completed. For whatever
+    // reason setting a zero second timeout is the solution.
+    setTimeout( function() {
+        var dragula = require( 'dragula' );
+        dragula( [ document.getElementById( 'apartment_list' ) ], {
+          moves : function( el, container, handle ) {
+            var classCheck = handle.className.indexOf( 'js-dragula-handle' );
+            return -1 !== classCheck;
+          }
+        } ).on( 'drop', function() {
+            aptList.methods.updateApartmentOrder( vm );
+        } );
+    }, 0 );
+
+    return false;
+};
+
+/**
+ * Toggles the apartment details.
+ *
+ * @param   {Integer}  itemIndex  The apartment list item index to toggle on.
+ *
+ * @return  {Boolean}              false
+ */
+aptList.methods.toggleShowDetails = function( itemIndex ) {
+    this.apartments.forEach( function( element, index ) {
+        if ( itemIndex === index ) {
+            element.showDetails = !element.showDetails;
+
+            return;
+        }
+
+        element.showDetails = false;
+    } );
+
+    return false;
+};
 
 /**
  * Removes an alert message.
@@ -91,6 +198,13 @@ aptList.methods.deleteApartment = function( index ) {
  */
 aptList.methods.getApartments = function( vm, callback ) {
     vm.$http.get( vm.api.index, function( apartments, status, request ) {
+        var order = 0;
+
+        apartments.forEach( function( element, index, array ) {
+            // We need this for toggling the apartment details.
+            element.showDetails = false;
+        } );
+
         vm.$set( 'apartments', apartments );
 
         if ( typeof callback === 'function' ) {
@@ -118,6 +232,10 @@ module.exports = {
     },
     methods  : aptList.methods,
     activate : function( done ) {
-        aptList.methods.getApartments( this, done );
+        var vm = this;
+        aptList.methods.getApartments( vm, function() {
+            aptList.methods.initDragula( vm );
+            done();
+        } );
     }
 };
