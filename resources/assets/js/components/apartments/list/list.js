@@ -20,7 +20,7 @@ aptList.methods = {};
  *
  * @return                false
  */
-aptList.methods.setCurrentApartmentOrder = function( vm ) {
+aptList.methods.setCurrentApartmentOrder = ( vm, callback )=> {
     var listItems = document.querySelectorAll( '#apartment_list>li' );
     vm.order.update = {};
 
@@ -34,8 +34,15 @@ aptList.methods.setCurrentApartmentOrder = function( vm ) {
 
         // Update the new order.
         var idInput = listItem.getElementsByClassName( 'js-dragula-id' )[ 0 ];
-        vm.order.update[ idInput.value ] = i;
+        vm.order.update[ idInput.value ] = {
+            order : i,
+            id    : idInput.value
+        };
         orderInput.value = i;
+    }
+
+    if ( typeof callback === 'function' ) {
+        callback();
     }
 
     return false;
@@ -49,7 +56,9 @@ aptList.methods.setCurrentApartmentOrder = function( vm ) {
  * @return                false
  */
 aptList.methods.updateApartmentOrder = function( vm ) {
-    aptList.methods.setCurrentApartmentOrder( vm );
+    aptList.methods.setCurrentApartmentOrder( vm, function() {
+        aptList.methods.storeApartmentOrder( vm );
+    } );
 
     return false;
 };
@@ -62,7 +71,11 @@ aptList.methods.updateApartmentOrder = function( vm ) {
  * @return                false
  */
 aptList.methods.storeApartmentOrder = function( vm ) {
-    console.log( 'store order' );
+    vm.$http.put( vm.api.updateOrder, vm.order.update, function() {
+    } ).error( function( data, status ) {
+        var message = 'Something went wrong please try again. (Error: ' + status + ')';
+        this.dispatchAlertMessage( message, 'danger' );
+    } );
 
     return false;
 };
@@ -117,45 +130,14 @@ aptList.methods.toggleShowDetails = function( itemIndex ) {
 };
 
 /**
- * Removes an alert message.
- *
- * @param   {Integer}  index  The index of the message to remove.
- *
- * @return  {Boolean}         false
- */
-aptList.methods.removeAlertMessage = function( index ) {
-    if ( typeof this.messages[ index ] !== 'undefined' ) {
-        clearTimeout( this.messages[ index ] );
-    }
-
-    this.messages.splice( index, 1 );
-
-    return false;
-};
-
-/**
  * Set an alert message.
  *
  * @param  {String}  value    The message value to be set.
  * @param  {String}  status   Optional, alert status value. Possible values success, info, warning, or danger. Default info.
  * @param  {Integer} timeout  Optional, the timeout duration in milliseconds timeout <= 0 it will be disabled. Default 4000 (4 seconds).
  */
-aptList.methods.setAlertMessage = function( value, status, timeout ) {
-    status = typeof status === 'undefined' ? 'info' : status;
-    timeout = typeof timeout === 'undefined' ? 4000 : timeout;
-
-    var messageIndex = this.messages.push( {
-        status : status,
-        value  : value,
-    } );
-    var index = messageIndex - 1;
-
-    if (  timeout > 0 ) {
-        var vm = this;
-        this.messages[ index ].timeout = setTimeout( function() {
-            vm.removeAlertMessage( index );
-        }, timeout );
-    }
+aptList.methods.dispatchAlertMessage = function( value, status, timeout ) {
+    this.$dispatch('add-alert-message', { value, status, timeout });
 
     return false;
 };
@@ -179,10 +161,10 @@ aptList.methods.deleteApartment = function( index ) {
     resource.delete( { id : apartment.id }, function( data, status, request ) {
         this.apartments.splice( index, 1 );
 
-        this.setAlertMessage( name + ' has been permanently deleted!', 'success' );
+        this.dispatchAlertMessage( name + ' has been permanently deleted!', 'success' );
     } ).error( function( data, status, request ) {
-        var errorMessage = 'Something went wrong please try again. (Error: ' + status + ')';
-        this.setAlertMessage( errorMessage, 'danger', 0 );
+        var message = 'Something went wrong please try again. (Error: ' + status + ')';
+        this.dispatchAlertMessage( message, 'danger', 0 );
     } );
 
     return false;
@@ -211,8 +193,8 @@ aptList.methods.getApartments = function( vm, callback ) {
             callback();
         }
     } ).error( function( data, status, request ) {
-        var errorMessage = 'You apartments could not be loaded please refresh the page. (Error: ' + status + ')';
-        this.setAlertMessage( errorMessage, 'danger', 0 );
+        var message = 'You apartments could not be loaded please refresh the page. (Error: ' + status + ')';
+        this.dispatchAlertMessage( message, 'danger', 0 );
 
         if ( typeof callback === 'function' ) {
             callback();
@@ -223,7 +205,7 @@ aptList.methods.getApartments = function( vm, callback ) {
 };
 
 module.exports = {
-    data     : function() {
+    data() {
         var data = aptList.data;
         data.api.delete = this.$resource( data.api.index + '/:id' );
         data.token = this.$http.headers.common[ 'X-CSRF-TOKEN' ];
@@ -231,7 +213,7 @@ module.exports = {
         return data;
     },
     methods  : aptList.methods,
-    activate : function( done ) {
+    activate( done ) {
         var vm = this;
         aptList.methods.getApartments( vm, function() {
             aptList.methods.initDragula( vm );

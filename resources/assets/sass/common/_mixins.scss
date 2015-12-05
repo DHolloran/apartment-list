@@ -1,0 +1,13 @@
+// Removes a lists default styling
+@mixin list-unstyled {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+} // @mixin list-unstyled
+
+// Clearfix
+@mixin clearfix {
+    content: '';
+    display: table;
+    clear: both;
+} // @include clearfix

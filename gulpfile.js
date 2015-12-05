@@ -13,20 +13,20 @@ require( 'laravel-elixir-postcss' );
  */
 
 elixir( function( mix ) {
-    mix.sass( 'app.scss' );
+    mix.sass( 'app.scss', 'resources/assets/css/app.css' );
     mix.browserify( 'app.js' );
-    mix.postcss( 'app.css', {
-        srcDir  : 'public/css',
-        plugins : [
-            require( 'postcss-import' ),
-            require( 'css-mqpacker' ),
-        ]
-    } );
+    mix.styles( [
+        'node_modules/normalize.css/normalize.css',
+        'node_modules/dragula/dist/dragula.css',
+        'resources/assets/css/app.css'
+    ], 'public/css/app.css', './' );
+
     mix.version( [
         'css/app.css',
         'js/app.js'
     ] );
     mix.browserSync( {
-        proxy : 'apartmentlist.dev'
+        proxy : 'apartmentlist.dev',
+        files : ['!*.css']
     } );
 } );

@@ -1,9 +1,7 @@
+<?php $apt = isset($apartment) ? $apartment : []; ?>
 
 {{-- Errors --}}
 @include('common._errors')
-<?php $apt = isset( $apartment ) ? $apartment : []; ?>
-
-{{-- {!! Form::state('state') !!} --}}
 
 {{-- Name --}}
 <div class="form-group">

@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
@@ -21,5 +23,15 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    protected function createAndAuthUser()
+    {
+        $fields = factory(User::class)->make()->toArray();
+        $fields['password'] = bcrypt(str_random(10));
+        $user = User::create($fields);
+        Auth::loginUsingId($user->id);
+
+        return $this;
     }
 }

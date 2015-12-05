@@ -8,7 +8,9 @@
 </head>
 <body>
     <div id="app">
+        @include('layouts/header')
         <div class="container">
+            {{-- Content --}}
             @yield('content')
         </div>
 

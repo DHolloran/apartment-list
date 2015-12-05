@@ -1,0 +1,62 @@
+// ====================================
+// Apartment List
+// ====================================
+.apartment-list {
+    @include list-unstyled;
+    @include clearfix;
+    @include outer-container;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+
+    > li {
+        @include clearfix;
+        position: relative;
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+    } // > li
+
+    .sort-handle {
+        text-indent: -9999px;
+
+        &:before {
+            text-indent: 0;
+        } // &:before
+    } // .sort-handle
+}
+
+.apartment-list-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    float: left;
+
+    @include media(769px) {
+       @include span-columns(6);
+     }
+} // .apartment-list-title
+
+
+
+// ====================================
+// Apartment List Menu
+// ====================================
+.apartment-list-menu {
+    @include clearfix;
+    @include list-unstyled;
+    float: right;
+    clear: none;
+
+    > li {
+        float: left;
+    } // > li
+} // .apartment-list-menu
+
+
+// ====================================
+// Apartment List Details
+// ====================================
+.apartment-list-details {
+    @include list-unstyled;
+} // .apartment-details

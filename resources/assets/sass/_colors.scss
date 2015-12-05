@@ -1,0 +1,51 @@
+<?php
+/**
+*
+*/
+class ClassName extends AnotherClass
+{
+    protected $name;
+    protected $name2;
+    protected $name3;
+
+    function __construct(argument)
+    {
+        # code...
+    }
+
+    public function test()
+    {
+
+    }
+
+
+    /**
+     * Gets the value of name.
+     *
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Gets the value of name2.
+     *
+     * @return mixed
+     */
+    public function getName2()
+    {
+        return $this->name2;
+    }
+
+    /**
+     * Gets the value of name3.
+     *
+     * @return mixed
+     */
+    public function getName3()
+    {
+        return $this->name3;
+    }
+}

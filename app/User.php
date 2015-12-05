@@ -45,6 +45,6 @@ class User extends Model implements AuthenticatableContract,
     public function apartments()
     {
         return $this->hasMany('App\Apartment')
-               ->orderBy('id', 'ASC');
+                ->orderBy('order', 'ASC');
     }
 }

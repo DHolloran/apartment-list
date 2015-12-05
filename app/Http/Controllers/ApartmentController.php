@@ -8,15 +8,19 @@ use App\Http\Controllers\Controller;
 use App\Apartment;
 use App\User;
 use Auth;
+use Parsedown;
 
 class ApartmentController extends Controller
 {
+    protected $parsedown;
+
     /**
      * Class constructor.
      */
     public function __construct()
     {
         $this->middleware('auth');
+        $this->parsedown = new Parsedown();
     }
 
     /**
@@ -31,6 +35,12 @@ class ApartmentController extends Controller
         $apartments = $user->apartments->toArray();
 
         if ($request->ajax()) {
+
+            $apartments = array_map(function($a){
+                $a['notes'] = $this->parsedown->text($a['notes']);
+                return $a;
+            }, $apartments);
+
             return $apartments;
         }
 
@@ -110,6 +120,33 @@ class ApartmentController extends Controller
     }
 
     /**
+     * Update the apartment sort order.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateOrder(Request $request)
+    {
+        $apartments = [];
+        foreach ($request->all() as $value) {
+            $id = (isset($value['id'])) ? $value['id'] : '';
+            $order = (isset($value['order'])) ? $value['order'] : '';
+
+            if ('' === $id or '' === $order) {
+                return [];
+            }
+
+            $apartment = Apartment::findOrFail($id);
+            $apartment->order = $order;
+            $apartment->save();
+
+            $apartments[] = $apartment;
+        }
+
+        return $apartments;
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  Apartment $apartment
@@ -128,7 +165,7 @@ class ApartmentController extends Controller
     }
 
     /**
-     * Handles form validation.
+     * Handle form validation.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return  Boolean True if successful.

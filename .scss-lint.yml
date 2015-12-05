@@ -15,8 +15,8 @@ linters:
   Indentation:
     enabled: true
     allow_non_nested_indentation: false
-    character: tab
-    width: 1
+    character: space
+    width: 4
 
   MergeableSelector:
     enabled: true
