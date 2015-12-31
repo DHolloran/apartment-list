@@ -13,7 +13,7 @@
         {!! Form::text(
             'name',
             isset( $apt['name'] ) ? $apt['name'] : '',
-            ['class' => 'form-control ', 'required' => 'required']
+            ['class' => 'form-control ']
         ) !!}
     </div> {{-- /.input-group --}}
 </div> {{-- /.form-group --}}
@@ -32,7 +32,7 @@
             {!! Form::text(
                 'addressLine1',
                 isset( $apt['addressLine1'] ) ? $apt['addressLine1'] : '',
-                ['class' => 'form-control', 'required' => 'required']
+                ['class' => 'form-control']
             ) !!}
         </div> {{-- /.input-group --}}
     </div> {{-- /.form-group --}}
@@ -62,7 +62,7 @@
             {!! Form::text(
                 'city',
                 isset( $apt['city'] ) ? $apt['city'] : 'Saint Louis',
-                ['class' => 'form-control', 'required' => 'required']
+                ['class' => 'form-control']
             ) !!}
         </div> {{-- /.input-group --}}
     </div> {{-- /.form-group --}}
@@ -78,7 +78,7 @@
                 'state',
                 ['' => 'Select A State', 'MO' => 'Missouri', 'IL' => 'Illinois'],
                 isset( $apt['state'] ) ? $apt['state'] : 'MO',
-                ['class' => 'form-control', 'required' => 'required']
+                ['class' => 'form-control']
             ) !!}
         </div> {{-- /.input-group --}}
     </div> {{-- /.form-group --}}
@@ -93,7 +93,7 @@
             {!! Form::text(
                 'zip',
                 isset( $apt['zip'] ) ? $apt['zip'] : '',
-                ['class' => 'form-control', 'required' => 'required']
+                ['class' => 'form-control']
             ) !!}
         </div> {{-- /.input-group --}}
     </div> {{-- /.form-group --}}
@@ -129,7 +129,7 @@
                 'number',
                 'price',
                 isset( $apt['price'] ) ? $apt['price'] : '0',
-                ['class' => 'form-control', 'min' => 0, 'required' => 'required']
+                ['class' => 'form-control', 'min' => 0]
             ) !!}
             <span class="input-group-addon">/mo</span>
         </div> {{-- /.input-group --}}
@@ -147,7 +147,7 @@
                 'number',
                 'parkingPrice',
                 isset( $apt['parkingPrice'] ) ? $apt['parkingPrice'] : '0',
-                ['class' => 'form-control', 'min' => 0, 'required' => 'required']
+                ['class' => 'form-control', 'min' => 0]
             ) !!}
             <span class="input-group-addon">/mo</span>
         </div> {{-- /.input-group --}}
@@ -165,7 +165,7 @@
                 'number',
                 'deposit',
                 isset( $apt['deposit'] ) ? $apt['deposit'] : '0',
-                ['class' => 'form-control', 'min' => 0, 'required' => 'required']
+                ['class' => 'form-control', 'min' => 0]
             ) !!}
             <span class="input-group-addon">/mo</span>
         </div> {{-- /.input-group --}}

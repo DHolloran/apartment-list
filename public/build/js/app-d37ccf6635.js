@@ -23783,7 +23783,7 @@ exports.insert = function (css) {
     var methods = {};
     var components = {
         apartmentList: require('./components/apartments/list/list.vue'),
-        alert: require('./components/alert/alert.vue')
+        alert: require('./components/alerts/alerts.vue')
     };
 
     // Setup Vue Resource.
@@ -23818,7 +23818,7 @@ exports.insert = function (css) {
     });
 })();
 
-},{"./components/alert/alert.vue":25,"./components/apartments/list/list.vue":27,"lodash":11,"vue":21,"vue-resource":14}],24:[function(require,module,exports){
+},{"./components/alerts/alerts.vue":25,"./components/apartments/list/list.vue":27,"lodash":11,"vue":21,"vue-resource":14}],24:[function(require,module,exports){
 'use strict';
 
 var alerts = {};
@@ -23828,10 +23828,10 @@ alerts.props = ['messages'];
 alerts.computed = {
     alertMessages: {
         get: function get() {
-            this.setAlertMessagesTimeout(this);
             return this.messages;
         },
         set: function set() {
+            this.setAlertMessagesTimeout(this);
             this.alertMessages = this.messages;
         }
     }
@@ -23891,13 +23891,13 @@ module.exports = {
 var __vueify_style__ = require("vueify-insert-css").insert("/* line 4, /Users/dholloran/Code/apartment-list/node_modules/bourbon-neat/app/assets/stylesheets/grid/_box-sizing.scss */\nhtml {\n  box-sizing: border-box; }\n\n/* line 9, /Users/dholloran/Code/apartment-list/node_modules/bourbon-neat/app/assets/stylesheets/grid/_box-sizing.scss */\n*, *::after, *::before {\n  box-sizing: inherit; }\n")
 'use strict';
 
-module.exports = require('./alert.js');
+module.exports = require('./alerts.js');
 ;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <ul class=\"list-unstyled\" v-for=\"message in alertMessages\">\n        <li class=\"alert alert-{{ message.status }}\">\n            <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\" @click.prevent.stop=\"removeAlertMessage\">\n                <span aria-hidden=\"true\">×</span>\n            </button>\n            {{{ message.value }}}\n        </li>\n    </ul>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
-  var id = "/Users/dholloran/Code/apartment-list/resources/assets/js/components/alert/alert.vue"
+  var id = "/Users/dholloran/Code/apartment-list/resources/assets/js/components/alerts/alerts.vue"
   module.hot.dispose(function () {
     require("vueify-insert-css").cache["/* line 4, /Users/dholloran/Code/apartment-list/node_modules/bourbon-neat/app/assets/stylesheets/grid/_box-sizing.scss */\nhtml {\n  box-sizing: border-box; }\n\n/* line 9, /Users/dholloran/Code/apartment-list/node_modules/bourbon-neat/app/assets/stylesheets/grid/_box-sizing.scss */\n*, *::after, *::before {\n  box-sizing: inherit; }\n"] = false
     document.head.removeChild(__vueify_style__)
@@ -23908,7 +23908,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update(id, module.exports, module.exports.template)
   }
 })()}
-},{"./alert.js":24,"vue":21,"vue-hot-reload-api":12,"vueify-insert-css":22}],26:[function(require,module,exports){
+},{"./alerts.js":24,"vue":21,"vue-hot-reload-api":12,"vueify-insert-css":22}],26:[function(require,module,exports){
 'use strict';
 
 var aptList = {};

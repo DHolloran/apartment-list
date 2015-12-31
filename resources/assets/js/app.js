@@ -1,7 +1,7 @@
 ( function() {
     'use strict';
 
-    var _ = require('lodash');
+    var _ = require( 'lodash' );
 
     // Setup Vue configuration.
     var Vue = require( 'vue' );
@@ -11,7 +11,7 @@
     var methods = {};
     var components = {
         apartmentList : require( './components/apartments/list/list.vue' ),
-        alert         : require( './components/alert/alert.vue' ),
+        alert         : require( './components/alerts/alerts.vue' ),
     };
 
     // Setup Vue Resource.

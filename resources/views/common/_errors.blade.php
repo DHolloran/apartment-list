@@ -13,5 +13,4 @@
     </div>
 @endif
 
-<?php $messages = json_encode([['value' => 'message', 'status' => 'success', 'timeout' => '4000']]); ?>
-<alert :messages.sync="{{ $messages }}"></alert>
+<alert :messages.sync="@{{ $messages }}"></alert>

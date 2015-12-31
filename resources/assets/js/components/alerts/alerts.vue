@@ -1,6 +1,6 @@
 <style lang="sass">
 @import 'resources/assets/sass/common';
-@import 'resources/assets/js/components/alert/alert';
+@import 'resources/assets/js/components/alerts/alert';
 </style>
 
 <template>
@@ -21,5 +21,5 @@
 </template>
 
 <script>
-module.exports = require('./alert.js');
+module.exports = require('./alerts.js');
 </script>

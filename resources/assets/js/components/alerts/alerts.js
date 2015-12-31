@@ -5,10 +5,10 @@ alerts.props = ['messages'];
 alerts.computed = {
     alertMessages : {
         get() {
-            this.setAlertMessagesTimeout( this );
             return this.messages;
         },
         set() {
+            this.setAlertMessagesTimeout( this );
             this.alertMessages = this.messages;
         }
     }

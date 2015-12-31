@@ -14,12 +14,14 @@ require( 'laravel-elixir-postcss' );
 
 elixir( function( mix ) {
     mix.sass( 'app.scss', 'resources/assets/css/app.css' );
-    mix.browserify( 'app.js' );
+
     mix.styles( [
         'node_modules/normalize.css/normalize.css',
         'node_modules/dragula/dist/dragula.css',
         'resources/assets/css/app.css'
     ], 'public/css/app.css', './' );
+
+    mix.browserify( 'app.js' );
 
     mix.version( [
         'css/app.css',
@@ -27,6 +29,8 @@ elixir( function( mix ) {
     ] );
     mix.browserSync( {
         proxy : 'apartmentlist.dev',
-        files : ['!*.css']
+        files : [ '!*.css' ]
     } );
+
+    mix.phpUnit();
 } );

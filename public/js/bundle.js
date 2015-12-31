@@ -24157,4 +24157,4 @@ if (module.hot) {(function () {  module.hot.accept()
 })()}
 },{"./list.js":26,"vue":21,"vue-hot-reload-api":12,"vueify-insert-css":22}]},{},[23]);
 
-//# sourceMappingURL=app.js.map
+//# sourceMappingURL=bundle.js.map
