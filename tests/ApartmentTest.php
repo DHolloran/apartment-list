@@ -10,6 +10,16 @@ class ApartmentTest extends TestCase
     use DatabaseTransactions;
 
     /**
+     * Setup test.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        Artisan::call('migrate');
+    }
+
+    /**
      * Tests creating an apartment.
      */
     public function testItCreatesAnApartment()
